@@ -3,10 +3,11 @@
   <div id="container" ref="container" :class="`${containerClasses}`">
     <!-- items rendering -->
     <template 
-      v-for="(item) in itemsToDisplay" 
+      v-for="(item, index) in itemsToDisplay" 
     >
       <slot 
         :item="item"
+        :index="index"
       ></slot>
     </template>
 
