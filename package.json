@@ -6,14 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/omer73364/lazy-load-list",
+  "homepage": "https://github.com/marcenariadiferente/lazy-load-list",
   "bugs": {
-    "url": "https://github.com/omer73364/lazy-load-list/issues",
-    "email": "anwar733649039@gmail.com"
+    "url": "https://github.com/marcenariadiferente/lazy-load-list/issues",
+    "email": "infra@marcenariadiferente.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/omer73364/lazy-load-list.git"
+    "url": "https://github.com/marcenariadiferente/lazy-load-list.git"
   },
   "keywords": [
     "virtual",
