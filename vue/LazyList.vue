@@ -22,7 +22,7 @@
     </template>
 
     <!-- list footer -->
-    <div v-show="((page !== items.length - 1) || !loading)" id="end-of-list" ref="end-of-list"/>
+    <div v-show="((page < items.length -1) || !loading)" id="end-of-list" ref="end-of-list"/>
 
   </div>
 </template>
@@ -69,6 +69,7 @@
     },
     beforeUnmount(){
       this.$refs['container'].removeEventListener('scroll', this.loadItems)
+      clearTimeout(this.timeout)
     },
     data(){
       return {
@@ -76,7 +77,8 @@
         page: 0, // page represents the index of last small array in the list
         loading: false,
         itemsToDisplay: [], // the list of items to be rendered
-      }  
+        timeout: null
+      }
     },
     methods:{
       // set the list and update it when data changes
@@ -85,25 +87,32 @@
         this.items = chunckedArray
         this.itemsToDisplay =  chunckedArray[0]
        },
-      
+
       // load more items when scrolling to the end of the list
       loadItems(){
-        if(this.page === this.items.length - 1) return
-        
+        this.page = Math.min(this.page, this.items.length)
+
+        if(this.page >= this.items.length - 1) {
+          this.loading = false
+          return
+        }
+
         const element = this.$refs["end-of-list"] //this.endOfList;
         if(!element) return
-        
+
         const position = element.getBoundingClientRect();
 
         // checking whether fully visible
         if((position.top >= 0 && position.bottom <= window.innerHeight  ) && !this.loading) {
             this.loading = true
             this.page++
-            setTimeout(() => {
-                this.itemsToDisplay = [...this.itemsToDisplay, ...this.items[this.page]]
+
+            this.itemsToDisplay = [...this.itemsToDisplay, ...this.items[this.page]]
+
+            this.$nextTick(() => {
                 this.loading = false
                 this.loadItems()
-            }, 500);
+            });
         }
       },
     }
